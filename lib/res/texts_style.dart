@@ -26,4 +26,10 @@ class AppSTexts {
     fontSize: 16,
     fontWeight: FontWeight.w400,
   );
+
+  static const TextStyle recomend = TextStyle(
+    color: Colors.white,
+    fontSize: 15,
+    fontWeight: FontWeight.w400,
+  );
 }
