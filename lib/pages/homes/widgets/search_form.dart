@@ -21,7 +21,7 @@ class SearchForm extends StatelessWidget {
             labelStyle: TextStyle(
               color: Colors.black,
             ),
-            hintText: '',
+            hintText: ' ',
             border: InputBorder.none,
           ),
         ),

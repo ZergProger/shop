@@ -1,18 +1,17 @@
 import 'package:dio/dio.dart';
+import 'package:shop/repository/abstract_repository.dart';
 import 'package:shop/repository/product_model.dart';
 
-class ShopRepository {
+class ShopRepository implements AbstractProductRepository {
   ShopRepository({required this.dio});
 
   final Dio dio;
 
-  Future<List<ProductModel>> getData() async {
-    final response = await dio.get('https://fakestoreapi.com/products');
+  @override
+  Future<List<ProductModel>> fetchData() async {
+    Response response = await dio.get('https://fakestoreapi.com/products');
 
-    // API возвращает список, приводим к List<dynamic>
-    final List<dynamic> dataList = response.data as List<dynamic>;
-
-    // Преобразуем список JSON-объектов в список `ProductModel`
-    return dataList.map((json) => ProductModel.fromJson(json)).toList();
+    final List<dynamic> data = response.data;
+    return data.map((data) => ProductModel.fromJson(data)).toList();
   }
 }
