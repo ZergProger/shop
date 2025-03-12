@@ -1,9 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:json_annotation/json_annotation.dart';
 
-part 'product_model.g.dart';
-
-@JsonSerializable()
 class ProductModel extends Equatable {
   const ProductModel({
     required this.id,
@@ -12,22 +8,20 @@ class ProductModel extends Equatable {
     required this.description,
     required this.category,
     required this.image,
+    required this.rate,
+    required this.rateCount,
   });
 
-  final int id;
+  final String id;
   final String title;
   final double price;
   final String description;
   final String category;
   final String image;
-
-  // Метод для десериализации JSON -> Объект
-  factory ProductModel.fromJson(Map<String, dynamic> json) =>
-      _$ProductModelFromJson(json);
-
-  // Метод для сериализации Объект -> JSON
-  Map<String, dynamic> toJson() => _$ProductModelToJson(this);
+  final double rate;
+  final int rateCount;
 
   @override
-  List<Object?> get props => [id, title, price, description, category, image];
+  List<Object?> get props =>
+      [id, title, price, description, category, image, rate, rateCount];
 }

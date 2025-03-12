@@ -11,7 +11,7 @@ import 'package:shop/utils/routes.dart';
 import 'package:shop/utils/routes_name.dart';
 import 'package:get_it/get_it.dart';
 
-final productsBloc = ProductBloc(GetIt.I<AbstractProductRepository>());
+final productsBloc = ProductBloc(GetIt.I<ShopRepository>());
 final Dio dio = Dio();
 
 void main() {
@@ -23,7 +23,7 @@ void main() {
     providers: [
       BlocProvider(
         create: (context) => ProductBloc(
-          GetIt.I<AbstractProductRepository>(),
+          GetIt.I<ShopRepository>(),
         ),
       ),
     ],

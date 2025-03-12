@@ -11,7 +11,25 @@ class ShopRepository implements AbstractProductRepository {
   Future<List<ProductModel>> fetchData() async {
     Response response = await dio.get('https://fakestoreapi.com/products');
 
-    final List<dynamic> data = response.data;
-    return data.map((data) => ProductModel.fromJson(data)).toList();
+    final data = response.data as List<dynamic>;
+
+    final products = data.map((e) {
+      return ProductModel(
+        id: e['id'],
+        title: e['title'],
+        price: e['price'],
+        description: e['description'],
+        category: e['category'],
+        image: e['image'],
+        rate: e['rate'],
+        rateCount: e['rateCount'],
+      );
+    }).toList();
+
+    if (response.statusCode == 200) {
+      return products;
+    } else {
+      throw Exception('Failed to load data');
+    }
   }
 }

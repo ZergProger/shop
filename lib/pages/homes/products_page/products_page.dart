@@ -34,7 +34,14 @@ class _ProductsPageState extends State<ProductsPage> {
             return Center(
               child: const CircularProgressIndicator(),
             );
+          } else if (state is ProductEmpty) {
+            return const Center(
+                child: Text(
+              'data not found',
+              style: TextStyle(color: Colors.black),
+            ));
           } else if (state is ProductLoaded) {
+            print(state.productList);
             return Padding(
               padding: const EdgeInsets.only(left: 30, top: 20, bottom: 20),
               child: GridView.builder(
@@ -52,11 +59,12 @@ class _ProductsPageState extends State<ProductsPage> {
                 },
               ),
             );
-          } else {
+          } else if (state is ProductFailed) {
             return Center(
-              child: Text('Error'),
+              child: Text('Error ${ProductFailed().exception.toString()}'),
             );
           }
+          return const SizedBox();
         },
       ),
     );

@@ -24,3 +24,5 @@ final class ProductFailed extends ProductState {
 
   final Object? exception;
 }
+
+final class ProductEmpty extends ProductState {}
