@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:shop/repository/product_model.dart';
 
 class BasketProduct extends StatelessWidget {
-  const BasketProduct({super.key});
+  const BasketProduct({super.key, required this.items});
+
+  final ProductModel items;
 
   @override
   Widget build(BuildContext context) {

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shop/basket/bloc/basket_bloc.dart';
 import 'package:shop/pages/homes/basket_page/widgets/basket_product.dart';
 import 'package:shop/pages/homes/basket_page/widgets/basket_recomend_product.dart';
 import 'package:shop/pages/homes/widgets/bottom_bar.dart';
@@ -25,12 +27,18 @@ class _BasketPageState extends State<BasketPage> {
       body: Column(
         children: [
           // Список корзины с вертикальной прокруткой
-          Container(
-            height: 470,
-            child: ListView.builder(
-              itemCount: 5,
-              itemBuilder: (context, index) => BasketProduct(),
-            ),
+          BlocBuilder<BasketBloc, BasketState>(
+            builder: (context, state) {
+              return SizedBox(
+                height: 450,
+                child: ListView.builder(
+                  itemCount: state.items.length,
+                  itemBuilder: (context, index) => BasketProduct(
+                    items: state.items[index],
+                  ),
+                ),
+              );
+            },
           ),
 
           // Блок с рекомендациями
@@ -50,7 +58,7 @@ class _BasketPageState extends State<BasketPage> {
           ),
 
           // Горизонтальный ListView для рекомендаций
-          Container(
+          SizedBox(
             height:
                 150, // Устанавливаем высоту контейнера с горизонтальным списком
             child: ListView.builder(

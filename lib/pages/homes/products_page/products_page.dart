@@ -41,7 +41,6 @@ class _ProductsPageState extends State<ProductsPage> {
               style: TextStyle(color: Colors.black),
             ));
           } else if (state is ProductLoaded) {
-            print(state.productList);
             return Padding(
               padding: const EdgeInsets.only(left: 30, top: 20, bottom: 20),
               child: GridView.builder(
@@ -51,10 +50,10 @@ class _ProductsPageState extends State<ProductsPage> {
                   mainAxisSpacing: 10,
                   childAspectRatio: 0.8,
                 ),
-                itemCount: state.productList.length,
+                itemCount: state.products.length,
                 itemBuilder: (context, index) {
                   return ProductCard(
-                    products: state.productList[index],
+                    products: state.products[index],
                   );
                 },
               ),

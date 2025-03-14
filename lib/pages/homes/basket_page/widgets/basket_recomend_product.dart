@@ -23,6 +23,11 @@ class BasketRecommendProduct extends StatelessWidget {
                   height: 104,
                 ),
               ),
+              Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Center(
+                    child: Text('product'),
+                  ))
             ],
           ),
         ));

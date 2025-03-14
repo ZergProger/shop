@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shop/pages/authorization/login/user_login_page/user_login_page.dart';
 import 'package:shop/pages/authorization/register/admin_register_page/admin_register_page.dart';
 import 'package:shop/pages/authorization/register/user_register_page/user_register_page.dart';
 import 'package:shop/pages/homes/account_page/account_page.dart';
@@ -15,5 +16,8 @@ Map<String, WidgetBuilder> generateRoutes() {
     route(ProductsPage): (_) => ProductsPage(),
     route(BasketPage): (_) => BasketPage(),
     route(AccountPage): (_) => AccountPage(),
+    route(UserRegisterPage): (_) => UserRegisterPage(),
+    route(AdminRegisterPage): (_) => AdminRegisterPage(),
+    route(UserLoginPage): (_) => UserLoginPage(),
   };
 }

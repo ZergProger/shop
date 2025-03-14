@@ -1,12 +1,10 @@
 part of 'product_bloc.dart';
 
 sealed class ProductState extends Equatable {
-  const ProductState({this.productList = const []});
-
-  final List<ProductModel> productList;
+  const ProductState();
 
   @override
-  List<Object> get props => [productList];
+  List<Object> get props => [];
 }
 
 final class ProductInitial extends ProductState {}

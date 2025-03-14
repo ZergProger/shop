@@ -8,20 +8,22 @@ class ProductModel extends Equatable {
     required this.description,
     required this.category,
     required this.image,
-    required this.rate,
-    required this.rateCount,
   });
 
-  final String id;
+  final dynamic id;
   final String title;
-  final double price;
+  final dynamic price;
   final String description;
   final String category;
   final String image;
-  final double rate;
-  final int rateCount;
 
   @override
-  List<Object?> get props =>
-      [id, title, price, description, category, image, rate, rateCount];
+  List<Object?> get props => [
+        id,
+        title,
+        price,
+        description,
+        category,
+        image,
+      ];
 }

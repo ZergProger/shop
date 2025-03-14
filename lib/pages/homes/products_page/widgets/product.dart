@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:shop/pages/dop_info_product_page/dop_info_products_page.dart';
 import 'package:shop/repository/product_model.dart';
 
 class ProductCard extends StatelessWidget {
-  ProductCard({super.key, required this.products});
+  const ProductCard({super.key, required this.products});
 
   final ProductModel products;
 
   @override
-  final GlobalKey key = GlobalKey();
-
-  @override
   Widget build(BuildContext context) {
     return InkWell(
-      key: key,
-      onTap: () {},
+      key: ValueKey(products),
+      onTap: () async {
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return DopInfoProductsPage(product: products);
+        }));
+      },
       borderRadius: BorderRadius.circular(15),
       child: Stack(
         clipBehavior: Clip.none,

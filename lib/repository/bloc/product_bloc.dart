@@ -20,12 +20,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       emit(ProductLoading());
       final products = await productsRepository.fetchData();
 
-      if (products.isNotEmpty) {
-        emit(ProductEmpty());
-        print('is not Empty');
-      } else {
-        emit(ProductLoaded(products: products));
-      }
+      emit(ProductLoaded(products: products));
     } catch (e) {
       emit(ProductFailed(exception: e));
       print('error $e');
