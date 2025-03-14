@@ -2,52 +2,59 @@ import 'package:flutter/material.dart';
 import 'package:shop/repository/product_model.dart';
 
 class BasketProduct extends StatelessWidget {
-  const BasketProduct({super.key, required this.items});
+  const BasketProduct({super.key, required this.products});
 
-  final ProductModel items;
+  final ProductModel products;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
-        top: 10,
-        bottom: 10,
-        left: 5,
-        right: 5,
-      ),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
       child: Container(
-        width: 310,
-        height: 97,
+        width: double.infinity, // Автоматическая ширина
+        height: 110,
         decoration: BoxDecoration(
-          color: Color.fromARGB(255, 255, 196, 0), // Цвет фона
-          borderRadius: BorderRadius.circular(5), // Радиус скругления углов
+          color: const Color.fromARGB(255, 255, 196, 0), // Фон
+          borderRadius: BorderRadius.circular(5),
         ),
         child: Row(
           children: [
             Padding(
-              padding: EdgeInsets.all(5), // Отступы вокруг картинки
-              child: Container(
-                width: 90,
-                height: 80,
-                decoration: BoxDecoration(
-                  color: Colors.white, // Цвет фона контейнера для изображения
-                  borderRadius:
-                      BorderRadius.circular(5), // Радиус скругления углов
-                ),
-                child: ClipRRect(
-                  borderRadius:
-                      BorderRadius.circular(5), // Скругляем углы изображения
-                  child: Image.network(
-                    '', // Укажите URL изображения
-                    fit: BoxFit
-                        .cover, // Растягиваем изображение, чтобы оно заполнило контейнер
-                    width: 90,
-                    height: 80,
-                  ),
+              padding: const EdgeInsets.all(10), // Отступы вокруг картинки
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(5), // Скругление углов
+                child: Image.network(
+                  products.image, // URL изображения
+                  fit: BoxFit.cover,
+                  width: 90,
+                  height: 80,
                 ),
               ),
             ),
-            // Вы можете добавить другие элементы в Row, например текст или кнопки
+            const SizedBox(width: 10), // Отступ между изображением и текстом
+            Expanded(
+              // Расширяем область для текста
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    products.title,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis, // Обрезка текста
+                    style: const TextStyle(fontSize: 14, color: Colors.white),
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    '${products.price} \$',
+                    style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

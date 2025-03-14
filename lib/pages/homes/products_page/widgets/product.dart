@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shop/basket/bloc/basket_bloc.dart';
 import 'package:shop/pages/dop_info_product_page/dop_info_products_page.dart';
 import 'package:shop/repository/product_model.dart';
 
@@ -85,10 +87,15 @@ class ProductCard extends StatelessWidget {
                   ),
                 ],
               ),
-              child: const Icon(
-                Icons.shopping_cart,
-                size: 22,
-                color: Colors.black,
+              child: IconButton(
+                onPressed: () {
+                  context.read<BasketBloc>().add(AddToBasket(products));
+                },
+                icon: const Icon(
+                  Icons.shopping_cart,
+                  size: 22,
+                  color: Colors.black,
+                ),
               ),
             ),
           )

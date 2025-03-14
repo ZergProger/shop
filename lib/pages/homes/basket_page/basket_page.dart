@@ -34,7 +34,7 @@ class _BasketPageState extends State<BasketPage> {
                 child: ListView.builder(
                   itemCount: state.items.length,
                   itemBuilder: (context, index) => BasketProduct(
-                    items: state.items[index],
+                    products: state.items[index],
                   ),
                 ),
               );
