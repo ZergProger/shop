@@ -89,6 +89,7 @@ class _DopInfoProductsPageState extends State<DopInfoProductsPage> {
                     builder: (BuildContext context) {
                       return Dialog(
                           child: BuyDialog(
+                        products: widget.product,
                         controllerCvvCard: controllerCvvCard,
                         controllerDateCard: controllerDateCard,
                         controllerNumberCard: controllerNumberCard,

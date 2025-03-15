@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shop/pages/dop_info_product_page/widgets/transaction_button.dart';
+import 'package:shop/repository/product_model.dart';
 import 'package:shop/res/formatter/card_date_formatter.dart';
 import 'package:shop/res/formatter/card_number_formatter.dart';
 
 class BuyDialog extends StatelessWidget {
   const BuyDialog(
       {super.key,
+      required this.products,
       required this.controllerNumberCard,
       required this.controllerDateCard,
       required this.controllerCvvCard});
+
+  final ProductModel products;
 
   final TextEditingController controllerNumberCard;
   final TextEditingController controllerDateCard;
@@ -58,7 +62,7 @@ class BuyDialog extends StatelessWidget {
                             19), // 16 цифр + 3 пробела
                         CardNumberFormatter(), // Форматирование
                       ],
-                      maxLength: 16,
+                      maxLength: 19,
                       controller: controllerNumberCard,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
@@ -125,10 +129,23 @@ class BuyDialog extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          const SizedBox(
-            height: 125,
+          Text(
+            'Product: ${products.title}',
+            style: TextStyle(color: Colors.black),
           ),
-          TransactionButton(),
+          const SizedBox(
+            height: 5,
+          ),
+          Text(
+            'Total: ${products.price}\$',
+            style: TextStyle(color: Colors.black),
+          ),
+          const SizedBox(
+            height: 70,
+          ),
+          TransactionButton(
+            products: products,
+          ),
         ],
       ),
     );

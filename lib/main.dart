@@ -9,6 +9,7 @@ import 'package:shop/authorization/authorization.dart';
 import 'package:shop/authorization/bloc/authorization_bloc.dart';
 import 'package:shop/basket/bloc/basket_bloc.dart';
 import 'package:shop/firebase_options.dart';
+import 'package:shop/history/bloc/history_bloc.dart';
 import 'package:shop/pages/authorization/register/user_register_page/user_register_page.dart';
 import 'package:shop/pages/homes/products_page/products_page.dart';
 import 'package:shop/repository/abstract_repository.dart';
@@ -22,6 +23,8 @@ import 'package:get_it/get_it.dart';
 final authorizationBloc = AuthorizationBloc(GetIt.I<AbstractAuthorization>());
 final productsBloc = ProductBloc(GetIt.I<ShopRepository>());
 final basketBloc = BasketBloc();
+final historyBloc = HistoryBloc();
+
 final Dio dio = Dio();
 
 void main() async {
@@ -45,6 +48,7 @@ void main() async {
   GetIt.I.registerSingleton(AbstractAuthorization);
   GetIt.I.registerSingleton(authorizationBloc);
   GetIt.I.registerSingleton(basketBloc);
+  GetIt.I.registerSingleton(historyBloc);
 
   runApp(MultiProvider(
     providers: [
@@ -57,6 +61,9 @@ void main() async {
       BlocProvider(
         create: (context) => basketBloc,
       ),
+      BlocProvider(
+        create: (context) => historyBloc,
+      )
     ],
     child: const Main(),
   ));

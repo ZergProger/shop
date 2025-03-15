@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shop/history/bloc/history_bloc.dart';
 import 'package:shop/pages/homes/account_page/widgets/account_widget.dart';
 import 'package:shop/pages/homes/account_page/widgets/history_widget.dart';
 import 'package:shop/pages/homes/widgets/app_bar.dart';
@@ -29,7 +31,7 @@ class _AccountPageState extends State<AccountPage> {
               height: 20,
             ),
             Container(
-              color: Colors.black,
+              color: Color.fromARGB(255, 255, 196, 0),
               child: Center(
                 child: Text(
                   'История',
@@ -42,9 +44,15 @@ class _AccountPageState extends State<AccountPage> {
             ),
             Expanded(
               // Используем Expanded, чтобы ListView занимал доступное пространство
-              child: ListView.builder(
-                itemCount: 5,
-                itemBuilder: (context, index) => HistoryWidget(),
+              child: BlocBuilder<HistoryBloc, HistoryState>(
+                builder: (context, state) {
+                  return ListView.builder(
+                    itemCount: state.product.length,
+                    itemBuilder: (context, index) => HistoryWidget(
+                      product: state.product[index],
+                    ),
+                  );
+                },
               ),
             )
           ],
