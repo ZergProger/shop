@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop/main.dart';
+import 'package:shop/pages/homes/widgets/app_bar.dart';
 import 'package:shop/pages/homes/widgets/bottom_bar.dart';
 import 'package:shop/pages/homes/products_page/widgets/product.dart';
-import 'package:shop/pages/homes/widgets/search_form.dart';
+import 'package:shop/pages/homes/widgets/icon_button_more_vert.dart';
 import 'package:shop/repository/bloc/product_bloc.dart';
 
 class ProductsPage extends StatefulWidget {
@@ -25,7 +26,12 @@ class _ProductsPageState extends State<ProductsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(automaticallyImplyLeading: false, title: SearchForm()),
+      appBar: AppBar(
+          automaticallyImplyLeading: false,
+          title: AppBarText(title: 'products'),
+          actions: [
+            IconButtonMoreVert(),
+          ]),
       bottomNavigationBar: BottomBar(),
       body: BlocBuilder<ProductBloc, ProductState>(
         bloc: productsBloc,

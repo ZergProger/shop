@@ -3,8 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop/basket/bloc/basket_bloc.dart';
 import 'package:shop/pages/homes/basket_page/widgets/basket_product.dart';
 import 'package:shop/pages/homes/basket_page/widgets/basket_recomend_product.dart';
+import 'package:shop/pages/homes/widgets/app_bar.dart';
 import 'package:shop/pages/homes/widgets/bottom_bar.dart';
-import 'package:shop/pages/homes/widgets/search_form.dart';
+import 'package:shop/pages/homes/widgets/icon_button_more_vert.dart';
 import 'package:shop/res/texts_style.dart';
 
 class BasketPage extends StatefulWidget {
@@ -22,7 +23,10 @@ class _BasketPageState extends State<BasketPage> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: SearchForm(),
+        title: AppBarText(title: 'Basket'),
+        actions: [
+          IconButtonMoreVert(),
+        ],
       ),
       body: Column(
         children: [

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shop/pages/homes/account_page/widgets/account_widget.dart';
 import 'package:shop/pages/homes/account_page/widgets/history_widget.dart';
+import 'package:shop/pages/homes/widgets/app_bar.dart';
 import 'package:shop/pages/homes/widgets/bottom_bar.dart';
-import 'package:shop/pages/homes/widgets/search_form.dart';
+import 'package:shop/pages/homes/widgets/icon_button_more_vert.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({super.key});
@@ -17,7 +18,8 @@ class _AccountPageState extends State<AccountPage> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: SearchForm(),
+        title: AppBarText(title: 'Account'),
+        actions: [IconButtonMoreVert()],
       ),
       body: Center(
         child: Column(
