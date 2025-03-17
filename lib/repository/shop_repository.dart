@@ -24,7 +24,7 @@ class ShopRepository implements AbstractProductRepository {
       if (response.statusCode == 200) {
         return productsList;
       }
-    } on DioException catch (dioError) {
+    } on DioException {
       print('dio error');
       return productBox.values.toList();
     } catch (e) {

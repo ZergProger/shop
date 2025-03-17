@@ -16,18 +16,14 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
     on<AddToHistory>(_onAddToHistory);
   }
 
-  Future<void> _onRemoveFromHistory(
-      RemoveFromHistory event, Emitter<HistoryState> emit) async {
-    final updatedProducts = List<ProductModel>.from(state.product)
-      ..remove(event.product);
+  Future<void> _onRemoveFromHistory(RemoveFromHistory event, Emitter<HistoryState> emit) async {
+    final updatedProducts = List<ProductModel>.from(state.product)..remove(event.product);
     emit(HistoryState(product: updatedProducts));
     await _saveBasket(updatedProducts);
   }
 
-  Future<void> _onAddToHistory(
-      AddToHistory event, Emitter<HistoryState> emit) async {
-    final updatedProducts = List<ProductModel>.from(state.product)
-      ..add(event.product);
+  Future<void> _onAddToHistory(AddToHistory event, Emitter<HistoryState> emit) async {
+    final updatedProducts = List<ProductModel>.from(state.product)..add(event.product);
     emit(HistoryState(product: updatedProducts));
     await _saveBasket(updatedProducts);
   }
@@ -41,8 +37,7 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
   Future<void> _loadBasket() async {
     final prefs = await SharedPreferences.getInstance();
     final jsonList = prefs.getStringList('history_items') ?? [];
-    final items =
-        jsonList.map((e) => ProductModel.fromJson(jsonDecode(e))).toList();
+    final items = jsonList.map((e) => ProductModel.fromJson(jsonDecode(e))).toList();
     emit(HistoryState(product: items));
   }
 }

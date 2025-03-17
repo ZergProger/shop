@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shop/pages/dop_info_product_page/dop_info_products_page.dart';
 import 'package:shop/repository/models/product_model.dart';
-import 'package:shop/utils/routes_name.dart';
 
 class BasketRecommendProduct extends StatefulWidget {
   const BasketRecommendProduct({super.key, required this.products});

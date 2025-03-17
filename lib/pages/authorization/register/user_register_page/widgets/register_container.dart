@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:shop/pages/authorization/login/user_login_page/user_login_page.dart';
 import 'package:shop/pages/authorization/register/user_register_page/widgets/elevated_button.dart';
 import 'package:shop/pages/authorization/register/user_register_page/widgets/text_form.dart';
 import 'package:shop/res/texts_style.dart';
+import 'package:shop/utils/routes_name.dart';
 
 class RegisterContainer extends StatelessWidget {
   const RegisterContainer(
@@ -10,9 +12,9 @@ class RegisterContainer extends StatelessWidget {
       required this.controllerEmail,
       required this.controllerPassword});
 
-  final TextEditingController controllerUsername;
   final TextEditingController controllerEmail;
   final TextEditingController controllerPassword;
+  final TextEditingController controllerUsername;
 
   @override
   Widget build(BuildContext context) {
@@ -47,8 +49,7 @@ class RegisterContainer extends StatelessWidget {
                       controller: controllerUsername,
                       decoration: InputDecoration(
                           labelText: 'Enter username',
-                          border:
-                              OutlineInputBorder(borderSide: BorderSide.none)),
+                          border: OutlineInputBorder(borderSide: BorderSide.none)),
                       width: 270),
                   const SizedBox(
                     height: 10,
@@ -57,8 +58,7 @@ class RegisterContainer extends StatelessWidget {
                       controller: controllerEmail,
                       decoration: InputDecoration(
                           labelText: 'Enter Email',
-                          border:
-                              OutlineInputBorder(borderSide: BorderSide.none)),
+                          border: OutlineInputBorder(borderSide: BorderSide.none)),
                       width: 250),
                   const SizedBox(
                     height: 5,
@@ -68,8 +68,7 @@ class RegisterContainer extends StatelessWidget {
                       decoration: InputDecoration(
                           labelText: 'Enter Password',
                           labelStyle: AppSTexts.regLabel,
-                          border:
-                              OutlineInputBorder(borderSide: BorderSide.none)),
+                          border: OutlineInputBorder(borderSide: BorderSide.none)),
                       width: 250),
                   const SizedBox(
                     height: 40,
@@ -81,6 +80,13 @@ class RegisterContainer extends StatelessWidget {
                   const SizedBox(
                     height: 170,
                   ),
+                  TextButton(
+                      onPressed: () =>
+                          Navigator.pushReplacementNamed(context, route(UserLoginPage)),
+                      child: Text(
+                        'do you have an account, login',
+                        style: AppSTexts.regNavigatorText,
+                      )),
                 ],
               ),
             ),

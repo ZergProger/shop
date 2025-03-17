@@ -54,8 +54,7 @@ class _LoginContainerState extends State<LoginContainer> {
                       controller: widget.controllerUsername,
                       decoration: InputDecoration(
                           labelText: 'Enter username',
-                          border:
-                              OutlineInputBorder(borderSide: BorderSide.none)),
+                          border: OutlineInputBorder(borderSide: BorderSide.none)),
                       width: 270),
                   const SizedBox(
                     height: 10,
@@ -64,8 +63,7 @@ class _LoginContainerState extends State<LoginContainer> {
                       controller: widget.controllerEmail,
                       decoration: InputDecoration(
                           labelText: 'Enter Email',
-                          border:
-                              OutlineInputBorder(borderSide: BorderSide.none)),
+                          border: OutlineInputBorder(borderSide: BorderSide.none)),
                       width: 250),
                   const SizedBox(
                     height: 5,
@@ -75,8 +73,7 @@ class _LoginContainerState extends State<LoginContainer> {
                       decoration: InputDecoration(
                           labelText: 'Enter Password',
                           labelStyle: AppSTexts.regLabel,
-                          border:
-                              OutlineInputBorder(borderSide: BorderSide.none)),
+                          border: OutlineInputBorder(borderSide: BorderSide.none)),
                       width: 250),
                   const SizedBox(
                     height: 40,
@@ -87,15 +84,14 @@ class _LoginContainerState extends State<LoginContainer> {
                   LoginElevatedButton(
                     email: widget.controllerEmail,
                     password: widget.controllerPassword,
-                    username: widget.controllerUsername,
                   ),
                   TextButton(
                       onPressed: () {
                         Navigator.pushNamed(context, route(UserRegisterPage));
                       },
                       child: Text(
-                        'register user',
-                        style: AppSTexts.regButton,
+                        'you don\'t have an account, register',
+                        style: AppSTexts.regNavigatorText,
                       )),
                   const SizedBox(
                     height: 5,

@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 class AppSTexts {
   AppSTexts._();
 
+  static const TextStyle regNavigatorText =
+      TextStyle(color: Colors.black, fontWeight: FontWeight.w300, fontSize: 15);
+
   static const TextStyle regTitle = TextStyle(
     color: Colors.black,
     fontSize: 20,

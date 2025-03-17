@@ -11,8 +11,7 @@ class Authorization implements AbstractAuthorization {
   @override
   Future<void> register(String email, String password) async {
     try {
-      await auth.createUserWithEmailAndPassword(
-          email: email, password: password);
+      await auth.createUserWithEmailAndPassword(email: email, password: password);
     } catch (e) {
       print('error $e');
     }

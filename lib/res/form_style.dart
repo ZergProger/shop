@@ -1,3 +1,8 @@
+import 'package:flutter/material.dart';
+
 class AppFormStyle {
-  const AppFormStyle._();
+  AppFormStyle._();
+
+  static final InputDecoration registerForm = InputDecoration(
+      labelText: 'Enter Email', border: OutlineInputBorder(borderSide: BorderSide.none));
 }

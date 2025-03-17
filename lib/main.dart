@@ -22,12 +22,15 @@ import 'package:shop/utils/routes.dart';
 import 'package:shop/utils/routes_name.dart';
 import 'package:get_it/get_it.dart';
 
-final authorizationBloc = AuthorizationBloc(GetIt.I<AbstractAuthorization>());
-final productsBloc = ProductBloc(GetIt.I<ShopRepository>());
+final GetIt getIt = GetIt.instance;
+
+final authorizationBloc = AuthorizationBloc(getIt<AbstractAuthorization>());
+final productsBloc = ProductBloc(getIt<AbstractProductRepository>());
 final basketBloc = BasketBloc();
 final historyBloc = HistoryBloc();
 
-final Dio dio = Dio();
+final user = FirebaseAuth.instance.currentUser;
+final FirebaseAuth auth = FirebaseAuth.instance;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,29 +39,27 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  final FirebaseAuth auth = FirebaseAuth.instance;
-
   await Hive.initFlutter();
 
   const String boxName = 'productBox';
   Hive.registerAdapter(ProductModelAdapter());
   final productBox = await Hive.openBox<ProductModel>(boxName);
 
-  GetIt.I.registerSingleton(boxName);
-  GetIt.I.registerSingleton(productBox);
-  GetIt.I.registerLazySingleton<AbstractProductRepository>(
+  getIt.registerSingleton(productBox);
+
+  final Dio dio = Dio();
+
+  getIt.registerSingleton(auth);
+  getIt.registerSingleton(dio);
+
+  getIt.registerLazySingleton<AbstractProductRepository>(
       () => ShopRepository(dio: dio, productBox: productBox));
-  GetIt.I.registerLazySingleton<AbstractAuthorization>(
-      () => Authorization(auth: auth));
-  GetIt.I.registerSingleton(Authorization(auth: auth));
-  GetIt.I.registerSingleton(ShopRepository(dio: dio, productBox: productBox));
-  GetIt.I.registerSingleton(productsBloc);
-  GetIt.I.registerSingleton(auth);
-  GetIt.I.registerSingleton(dio);
-  GetIt.I.registerSingleton(AbstractAuthorization);
-  GetIt.I.registerSingleton(authorizationBloc);
-  GetIt.I.registerSingleton(basketBloc);
-  GetIt.I.registerSingleton(historyBloc);
+  getIt.registerLazySingleton<AbstractAuthorization>(() => Authorization(auth: auth));
+
+  getIt.registerSingleton(productsBloc);
+  getIt.registerSingleton(authorizationBloc);
+  getIt.registerSingleton(basketBloc);
+  getIt.registerSingleton(historyBloc);
 
   runApp(
     MultiProvider(
@@ -81,11 +82,7 @@ class Main extends StatelessWidget {
     return MaterialApp(
       theme: AppTheme.lightTheme,
       debugShowCheckedModeBanner: false,
-      initialRoute: route(
-        GetIt.I<AbstractAuthorization>().user != null
-            ? ProductsPage
-            : UserRegisterPage,
-      ),
+      initialRoute: user != null ? route(ProductsPage) : route(UserRegisterPage),
       routes: generateRoutes(),
     );
   }
