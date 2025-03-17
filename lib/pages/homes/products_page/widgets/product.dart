@@ -1,8 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop/basket/bloc/basket_bloc.dart';
 import 'package:shop/pages/dop_info_product_page/dop_info_products_page.dart';
-import 'package:shop/repository/product_model.dart';
+import 'package:shop/repository/models/product_model.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({super.key, required this.products});
@@ -41,7 +42,13 @@ class ProductCard extends StatelessWidget {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Image.network(products.image),
+                  child: CachedNetworkImage(
+                    imageUrl: products.image,
+                    placeholder: (context, url) =>
+                        Image.network(products.image),
+                    errorWidget: (context, url, error) =>
+                        Icon(Icons.image_not_supported), // Ошибка
+                  ),
                 ),
                 const SizedBox(height: 10),
                 Text(

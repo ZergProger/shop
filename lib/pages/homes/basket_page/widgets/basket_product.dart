@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shop/repository/product_model.dart';
+import 'package:shop/repository/models/product_model.dart';
 
 class BasketProduct extends StatelessWidget {
   const BasketProduct({super.key, required this.products});

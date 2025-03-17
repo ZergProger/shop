@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shop/pages/dop_info_product_page/widgets/transaction_button.dart';
-import 'package:shop/repository/product_model.dart';
+import 'package:shop/repository/models/product_model.dart';
 import 'package:shop/res/formatter/card_date_formatter.dart';
 import 'package:shop/res/formatter/card_number_formatter.dart';
 

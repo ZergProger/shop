@@ -1,7 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AccountWidget extends StatefulWidget {
   const AccountWidget({super.key});
@@ -13,43 +14,54 @@ class AccountWidget extends StatefulWidget {
 class _AccountWidgetState extends State<AccountWidget> {
   File? _image; // Файл выбранного изображения
   final picker = ImagePicker();
+  String? _imagePath;
 
-  Future<void> getLostData() async {
-    try {
-      final ImagePicker picker = ImagePicker();
-      final LostDataResponse response = await picker.retrieveLostData();
-
-      if (response.isEmpty) return;
-
-      if (response.files != null) {
-        _handleLostFiles(response.files!);
-      } else {
-        _handleError(response.exception);
-      }
-    } catch (e, stackTrace) {
-      debugPrint("Ошибка при восстановлении данных: $e\n$stackTrace");
-    }
+  @override
+  void initState() {
+    super.initState();
+    _loadImagePath(); // Загрузка пути изображения при запуске приложения
   }
 
-  void _handleLostFiles(List<XFile> files) {
+  // Загрузка пути к изображению из shared_preferences
+  void _loadImagePath() async {
+    final prefs = await SharedPreferences.getInstance();
     setState(() {
-      _image = File(files.first.path);
+      _imagePath = prefs.getString('imagePath');
+      if (_imagePath != null) {
+        _image = File(_imagePath!); // Если путь есть, загружаем изображение
+      }
     });
   }
 
-  void _handleError(PlatformException? exception) {
-    debugPrint("Ошибка: $exception");
+  // Сохранение изображения в файл
+  Future<void> _saveImage(XFile pickedFile) async {
+    final directory = await getApplicationDocumentsDirectory();
+    final fileName =
+        '${DateTime.now().millisecondsSinceEpoch}.jpg'; // Уникальное имя
+    final filePath = '${directory.path}/$fileName';
+
+    // Копируем изображение в локальное хранилище
+    await pickedFile.saveTo(filePath);
+
+    // Сохраняем путь в shared_preferences
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('imagePath', filePath);
+
+    setState(() {
+      _image = File(filePath);
+      _imagePath = filePath;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: 25),
+      padding: const EdgeInsets.only(top: 25),
       child: Container(
         width: 290,
         height: 110,
         decoration: BoxDecoration(
-          color: Color.fromARGB(138, 211, 211, 211),
+          color: const Color.fromARGB(138, 211, 211, 211),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Stack(
@@ -65,16 +77,14 @@ class _AccountWidgetState extends State<AccountWidget> {
                   final XFile? pickedFile =
                       await picker.pickImage(source: ImageSource.gallery);
                   if (pickedFile != null) {
-                    setState(() {
-                      _image = File(pickedFile.path);
-                    });
+                    _saveImage(pickedFile); // Сохраняем изображение
                   }
                 },
                 child: CircleAvatar(
                   radius: 65,
-                  backgroundColor: Color.fromARGB(255, 255, 196, 0),
+                  backgroundColor: const Color.fromARGB(255, 255, 196, 0),
                   child: _image == null
-                      ? Icon(
+                      ? const Icon(
                           Icons.person,
                           size: 40,
                           color: Colors.black,

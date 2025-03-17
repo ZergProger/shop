@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shop/repository/product_model.dart';
+import 'package:shop/repository/models/product_model.dart';
 
 part 'history_event.dart';
 part 'history_state.dart';

@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/authorization/abstract_authorization.dart';
 import 'package:shop/authorization/authorization.dart';
@@ -14,6 +15,7 @@ import 'package:shop/pages/authorization/register/user_register_page/user_regist
 import 'package:shop/pages/homes/products_page/products_page.dart';
 import 'package:shop/repository/abstract_repository.dart';
 import 'package:shop/repository/bloc/product_bloc.dart';
+import 'package:shop/repository/models/product_model.dart';
 import 'package:shop/repository/shop_repository.dart';
 import 'package:shop/res/theme.dart';
 import 'package:shop/utils/routes.dart';
@@ -36,12 +38,20 @@ void main() async {
 
   final FirebaseAuth auth = FirebaseAuth.instance;
 
+  await Hive.initFlutter();
+
+  const String boxName = 'productBox';
+  Hive.registerAdapter(ProductModelAdapter());
+  final productBox = await Hive.openBox<ProductModel>(boxName);
+
+  GetIt.I.registerSingleton(boxName);
+  GetIt.I.registerSingleton(productBox);
   GetIt.I.registerLazySingleton<AbstractProductRepository>(
-      () => ShopRepository(dio: dio));
+      () => ShopRepository(dio: dio, productBox: productBox));
   GetIt.I.registerLazySingleton<AbstractAuthorization>(
       () => Authorization(auth: auth));
   GetIt.I.registerSingleton(Authorization(auth: auth));
-  GetIt.I.registerSingleton(ShopRepository(dio: dio));
+  GetIt.I.registerSingleton(ShopRepository(dio: dio, productBox: productBox));
   GetIt.I.registerSingleton(productsBloc);
   GetIt.I.registerSingleton(auth);
   GetIt.I.registerSingleton(dio);
@@ -50,23 +60,17 @@ void main() async {
   GetIt.I.registerSingleton(basketBloc);
   GetIt.I.registerSingleton(historyBloc);
 
-  runApp(MultiProvider(
-    providers: [
-      BlocProvider(
-        create: (context) => productsBloc,
-      ),
-      BlocProvider(
-        create: (context) => authorizationBloc,
-      ),
-      BlocProvider(
-        create: (context) => basketBloc,
-      ),
-      BlocProvider(
-        create: (context) => historyBloc,
-      )
-    ],
-    child: const Main(),
-  ));
+  runApp(
+    MultiProvider(
+      providers: [
+        BlocProvider(create: (context) => productsBloc),
+        BlocProvider(create: (context) => authorizationBloc),
+        BlocProvider(create: (context) => basketBloc),
+        BlocProvider(create: (context) => historyBloc),
+      ],
+      child: const Main(),
+    ),
+  );
 }
 
 class Main extends StatelessWidget {
@@ -77,9 +81,11 @@ class Main extends StatelessWidget {
     return MaterialApp(
       theme: AppTheme.lightTheme,
       debugShowCheckedModeBanner: false,
-      initialRoute: route(GetIt.I<AbstractAuthorization>().user != null
-          ? ProductsPage
-          : UserRegisterPage),
+      initialRoute: route(
+        GetIt.I<AbstractAuthorization>().user != null
+            ? ProductsPage
+            : UserRegisterPage,
+      ),
       routes: generateRoutes(),
     );
   }

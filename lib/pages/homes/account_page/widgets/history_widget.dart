@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shop/repository/product_model.dart';
+import 'package:shop/repository/models/product_model.dart';
 
 class HistoryWidget extends StatelessWidget {
   const HistoryWidget({super.key, required this.product});

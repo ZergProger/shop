@@ -1,4 +1,4 @@
-import 'package:shop/repository/product_model.dart';
+import 'package:shop/repository/models/product_model.dart';
 
 abstract class AbstractProductRepository {
   Future<List<ProductModel>> fetchData();

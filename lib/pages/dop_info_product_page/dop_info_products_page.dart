@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shop/pages/dop_info_product_page/widgets/buy_dialog.dart';
-import 'package:shop/repository/product_model.dart';
+import 'package:shop/repository/models/product_model.dart';
 
 class DopInfoProductsPage extends StatefulWidget {
   const DopInfoProductsPage({super.key, required this.product});
